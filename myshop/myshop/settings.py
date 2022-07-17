@@ -151,7 +151,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'winandiaris@gmail.com'#sender's email-id 
-EMAIL_HOST_PASSWORD = 'aris1985'#password associated with above email-id 
+EMAIL_HOST_PASSWORD = 'arisxxxx'#password associated with above email-id 
 
 # Braintree settings
 BRAINTREE_MERCHANT_ID = 'zphjd4k2x8hbmvdd' # Merchant ID
