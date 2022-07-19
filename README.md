@@ -5,6 +5,7 @@
     - notif/status cart tidak muncul pada beberapa page, mungkin masalah cache
     - email notif belum berhasil
     - masih native html/css/js
+    - production set
 <details>
 <summary>Instalasi clone</summary>
 

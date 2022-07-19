@@ -1,0 +1,74 @@
+version: '3'
+
+services:
+    onlineshopantonio:
+        build: .
+        volumes:
+        - .:/opt/services/onlineshopantonio/src
+        - static_volume_shop:/opt/services/onlineshopantonio/static
+        - media_volume_shop:/opt/services/onlineshopantonio/media
+        networks:
+        - nginx_network_shop
+        - database_network_shop
+        depends_on:
+            - database_shop
+    
+    nginx:
+        image: nginx
+        ports:
+            - 8003:80
+        volumes:
+        - ./config/nginx/conf.d:/etc/nginx/conf.d
+        - static_volume_shop:/opt/services/onlineshopantonio/static  # <-- bind the static volume
+        - media_volume_shop:/opt/services/onlineshopantonio/media  # <-- bind the media volume
+        depends_on:
+        - onlineshopantonio
+        networks:
+        - nginx_network_shop
+
+    database_shop:
+        image: postgres
+        env_file:
+        - config/db/database1_env
+        networks:
+        - database_network_shop
+        volumes:
+        - database1_volume_shop:/var/lib/postgresql/data
+
+    rabbitmq:
+        image: rabbitmq:3-management-alpine
+        ports:
+            - 5672:5672
+            - 15672:15672
+        volumes:
+            - rabbitmq_shop_data:/var/lib/rabbitmq/
+            - rabbitmq_shop_log:/var/log/rabbitmq
+        command:
+            - rabbitmq-server
+        networks:
+            - rabbitmq_shop
+
+    redis:
+        image: redis:6.2-alpine
+        ports:
+            - 6379:6379
+        command: redis-server
+        networks:
+            - redis_shop
+
+networks:
+    nginx_network_shop:
+        driver: bridge
+    database_network_shop:
+        driver: bridge
+    rabbitmq_shop:
+        driver: bridge
+    redis_shop:
+        driver: bridge
+
+volumes:
+    database1_volume_shop:
+    static_volume_shop:
+    media_volume_shop:
+    rabbitmq_shop_data:
+    rabbitmq_shop_log:

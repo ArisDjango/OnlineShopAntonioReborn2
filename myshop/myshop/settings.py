@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-%f=inaj0ozlr18qzvwb^e@42murhje6_nf&o#%8rc47j9u5754
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','127.0.0.1','167.172.70.208']
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_TRUSTED_ORIGINS=['http://167.172.70.208:8003'] #port diganti sesuai app image docker
 
 
 # Application definition
@@ -87,13 +89,24 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
-
+    
+    # Production
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'database1',
         'USER': 'aris',
         'PASSWORD': 'aris1985',
+        'HOST': 'database_shop',
+        'PORT': '5432'
     }
+
+    #local
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'database1',
+    #     'USER': 'aris',
+    #     'PASSWORD': 'aris1985',
+    # }
 }
 
 REDIS_HOST = 'localhost'
