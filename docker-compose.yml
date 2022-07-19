@@ -53,6 +53,8 @@ services:
         ports:
             - 6379:6379
         command: redis-server
+        depends_on:
+            - onlineshopantonio
         networks:
             - redis_shop
 
