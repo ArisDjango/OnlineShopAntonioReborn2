@@ -45,9 +45,10 @@ services:
             - rabbitmq_shop_log:/var/log/rabbitmq
         command:
             - rabbitmq-server
+            - sh -c "celery -A myshop worker -l info && celery -A myshop flower"
         networks:
             - rabbitmq_shop
-
+            
     redis:
         image: redis:6.2-alpine
         ports:

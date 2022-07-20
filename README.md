@@ -11,7 +11,7 @@
 
 - Local
     - git clone xxxx
-    - `pipenv shell` (jika tidak bisa, activate manual di . source /home/aris/.local/share/virtualenvs/BlogAntonio-J9LzUExB/bin/activate)
+    - `pipenv shell` (jika tidak bisa, activate manual di . source /home/aris/.local/share/virtualenvs/OnlineShopAntonioReborn2-9gnlXKj9/bin/activate)
     - `pipenv install`
     - pada settings.py, set allowed_host: 'localhost'
     - Database
@@ -47,11 +47,11 @@
     - `docker-compose up`
     - `docker container ls` --> pastikan container jalan
     - migrate:
-        - `docker-compose run --rm blogantonio /bin/bash -c "cd blogApp; python3 manage.py migrate"`
+        - `docker-compose run --rm onlineshopantonio /bin/bash -c "cd myshop; python3 manage.py migrate"`
     - super user
-        - `docker-compose run --rm blogantonio /bin/bash -c "cd blogApp; python3 manage.py createsuperuser"`
+        - `docker-compose run --rm onlineshopantonio /bin/bash -c "cd myshop; python3 manage.py createsuperuser"`
     - collect static
-        - `docker-compose run --rm blogantonio /bin/bash -c "cd blogApp; python3 manage.py collectstatic --no-input"`
+        - `docker-compose run --rm onlineshopantonio /bin/bash -c "cd myshop; python3 manage.py collectstatic --no-input"`
 
     
 </details>
