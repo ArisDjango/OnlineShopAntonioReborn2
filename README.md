@@ -6,6 +6,8 @@
     - email notif belum berhasil
     - masih native html/css/js
     - production set
+    - prod:
+        - redis belum optimal
 <details>
 <summary>Instalasi clone</summary>
 
