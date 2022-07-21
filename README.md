@@ -7,7 +7,7 @@
     - masih native html/css/js
     - production set
     - prod:
-        - redis belum optimal
+        - redis belum optimal/jalan
 <details>
 <summary>Instalasi clone</summary>
 
@@ -56,4 +56,111 @@
         - `docker-compose run --rm onlineshopantonio /bin/bash -c "cd myshop; python3 manage.py collectstatic --no-input"`
 
     
+</details>
+
+<details>
+<summary>Online Shop summary</summary>
+
+<details>
+<summary>Creating an online shop project</summary>
+
+- Create Project
+    - myshop project
+    - shop app
+- Creating shop product catalog models
+    - Category() --> name, slug
+    - Product() --> category(FK=Category), name, slug, image, desc, price, available, created, updated
+    - install pillow
+- Registering catalog models on the
+administration site
+    - CategoryAdmin() --> list_display: name, slug, prepopulated_fields: slug, name)
+    - ProductAdmin() --> list_display, list_filter, list_editable, prepopulated_fields
+    - createsuperuser
+- Building catalog views
+    - product_list() --> category, categories, products, --> list.html
+    - product_detail() --> product --> detail.html
+    - shop/urls.py, myshop/urls.py
+    - models.py --> reverse(), get_absolute_url()
+- Creating catalog templates
+    - templates
+    ```
+    templates/
+        shop/
+            base.html
+            product/
+                list.html
+                detail.html
+    ```
+    - settings.py --> MEDIA_URL, MEDIA_ROOT
+    - urls.py --> if settings.DEBUG: ...
+</details>
+
+<details>
+<summary>Building a shopping cart</summary>
+<details>
+<summary>
+Using Django sessions</summary>
+
+    - django.contrib.sessions.middleware.SessionMiddleware
+</details>
+
+<details>
+<summary>Session settings</summary>
+
+- SESSION_COOKIE_AGE, SESSION_COOKIE_DOMAIN, SESSION_COOKIE_SECURE, SESSION_EXPIRE_AT_BROWSER_CLOSE, SESSION_SAVE_EVERY_REQUEST
+- https://docs.
+djangoproject.com/en/3.0/ref/settings/#sessions
+</details>
+- Session expiration
+    - If you set SESSION_EXPIRE_AT_BROWSER_CLOSE to True, the session will expire when the user closes the browser, and the SESSION_COOKIE_AGE setting will not have any effect.
+    - You can use the set_expiry() method of request.session to overwrite the
+duration of the current session.
+- Storing shopping carts in sessions 
+    - settings.py --> CART_SESSION_ID = 'cart'
+    - python manage.py startapp cart
+    - cart.py -->Cart():
+        - `__init__()`
+        - `__len__`
+        - add()
+        - save()
+        - remove()
+        - get_total_price()
+        - clear()
+- Creating shopping cart views
+    - Adding items to the cart
+        - cart > forms.py --> CartAddProductForm()
+        - views.py:
+            - cart_add()
+            - cart_remove()
+            - cart_detail()
+            - cart > urls.py
+
+    - Building a template to display the cart
+        ```
+        templates/
+            cart/
+                detail.html
+        ```
+    - Adding products to the cart
+        - views.py > product_detail() --> `... cart_product_form = CartAddProductForm()...`
+        - shop/product/detail.html --> `...form action="{% url "cart:cart_add" product.id %}...`
+        - runserver > detail page > input quantity > Add to cart
+
+    - Updating product quantities in the cart
+        - Tujuan : Kemampuan Merubah quantity pada detail page
+        - cart > views.py > cart_detail() > `...for item in cart: dst ...`
+        - cart > detail.html
+        - replace `{{ item.quantity }}` dengan ` ...<form action="{% url "cart:cart_add" product.id %}" ...`
+        -  http://127.0.0.1:8000/cart/
+
+- Creating a context processor for the current
+cart
+    - Context processors
+        - Tujuan: Agar cart update bisa tampil secara global
+        - cart > context_processors.py > cart()
+        - settings.py > `TEMPLATES ... 'cart.context_processors.cart',`
+        - shop > templates > base.html > `...{% with total_items=cart|length %} dst...`
+    - Setting the cart into the request context
+
+</details>
 </details>
